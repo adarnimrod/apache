@@ -1,0 +1,56 @@
+---
+# tasks file for ansible-apache
+
+- assert:
+    that:
+    - ansible_os_family == 'Debian'
+
+- name: apt install
+  with_items:
+  - apache2
+  - ssl-cert
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Add Apache to ssl-cert group
+  user:
+    append: yes
+    name: www-data
+    groups: ssl-cert
+    state: present
+  notify:
+  - Restart Apache
+
+- name: Disable default site
+  file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
+  notify:
+  - Restart Apache
+
+- name: Enable modules
+  with_items:
+  - ssl
+  - headers
+  apache2_module:
+    name: '{{ item }}'
+    state: present
+
+- name: Configure
+  template:
+    src: shore.conf.j2
+    dest: /etc/apache2/conf-enabled/shore.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+  - Reload Apache
+
+- name: Allow HTTPS in UFW
+  ufw:
+    rule: allow
+    port: 443
+    proto: tcp

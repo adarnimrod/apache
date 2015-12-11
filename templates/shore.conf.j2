@@ -1,7 +1,6 @@
 {# Default configration for Apache #}
 ErrorLog                ${APACHE_LOG_DIR}/error.log
 CustomLog               ${APACHE_LOG_DIR}/access.log combined
-SSLEngine               on
 SSLCertificateFile      {{ tls_cert_path }}
 SSLCertificateKeyFile   {{ tls_key_path }}
 SSLCACertificateFile    {{ tls_ca_cert_path }}

@@ -1,38 +1,48 @@
-ansible-apache
-##############
+Apache
+######
 
-An Ansible role to install and configure Apache2 on Debian Jessie or later.
+Provision Apache.
 
 Requirements
 ------------
 
-Debian Jessie.
-SSL certificate (the self-signed snakeoil cert is valid).
+See :code:`meta/main.yml` and assertions at top of :code:`tasks/main.yml`.
 
 Role Variables
 --------------
-::
 
-    apache_ocsp_server:
+See :code:`defaults/main.yml`.
 
 Dependencies
 ------------
 
-`Common role <https://www.shore.co.il/cgit/ansible-common/>`_
+See :code:`meta/main.yml`.
 
 Example Playbook
 ----------------
-::
 
-    - hosts: servers
-      roles:
-      - role: apache
-        apache_ocsp_server: https://ocsp.ca.com/
+See :code:`tests/playbook.yml`.
+
+Testing
+-------
+
+To install the dependencies:
+
+.. code:: shell
+
+    ansible-galaxy install git+file://$(pwd),$(git rev-parse --abbrev-ref HEAD)
+
+To run the full test suite:
+
+.. code:: shell
+
+    molecule test
 
 License
 -------
 
-This software is licnesed under the MIT licese (see the ``LICENSE.txt`` file).
+This software is licensed under the MIT license (see the :code:`LICENSE.txt`
+file).
 
 Author Information
 ------------------
@@ -40,14 +50,15 @@ Author Information
 Nimrod Adar, `contact me <nimrod@shore.co.il>`_ or visit my `website
 <https://www.shore.co.il/>`_. Patches are welcome via `git send-email
 <http://git-scm.com/book/en/v2/Git-Commands-Email>`_. The repository is located
-at: https://www.shore.co.il/cgit/.
+at: https://www.shore.co.il/git/.
 
 TODO
 ----
 
+- Remove dependency on the Common role, depend on the ca-store and specific
+  roles.
 - Server health.
-- OCSP.
-- Collectd metrics.
+- Optional OCSP.
 - Log to syslog.
 - Limit requests
   (https://httpd.apache.org/docs/current/misc/security_tips.html#dos and
@@ -56,3 +67,4 @@ TODO
   (https://httpd.apache.org/docs/current/misc/security_tips.html#systemsettings).
 - Assertions.
 - Wait for server to come online.
+- Tests.

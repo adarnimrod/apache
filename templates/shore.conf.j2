@@ -1,12 +1,9 @@
 {# Default configration for Apache #}
 ErrorLog                ${APACHE_LOG_DIR}/error.log
 CustomLog               ${APACHE_LOG_DIR}/access.log combined
-SSLCertificateFile      {{ tls_cert_path }}
-SSLCertificateKeyFile   {{ tls_key_path }}
-SSLCACertificateFile    {{ tls_ca_cert_path }}
 SSLProtocol             all -SSLv2 -SSLv3
 SSLCipherSuite          !kRSA:!3DES:!RC4:!DES:!MD5:!aNULL:!NULL:AESGCM+ECDH:AES256+ECDH:AES128:+SHA1;
 SSLHonorCipherOrder     on
 SSLCompression          off
-#SSLOpenSSLConfCmd       DHParameters "/etc/ssl/dhparams.pem"
+SSLOpenSSLConfCmd       DHParameters "/etc/ssl/dhparams.pem"
 Header                  always set Strict-Transport-Security "max-age=15768000;includeSubDomains; preload"

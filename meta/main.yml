@@ -1,15 +1,13 @@
 ---
 galaxy_info:
   author: Nimrod Adar
-  description: Ansible role for installing Apache.
-  company: Shore technologies.
+  description: Apache
+  company: Shore technologies
   license: MIT
-  min_ansible_version: 1.9
+  min_ansible_version: 2.0
   platforms:
   - name: Debian
     versions:
     - jessie
-  categories:
-  - web
-dependencies:
-- role: common
+  galaxy_tags: [ web ]
+dependencies: []

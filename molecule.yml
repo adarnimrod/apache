@@ -1,0 +1,23 @@
+---
+ansible:
+  verbose: v
+  playbook: tests/playbook.yml
+  diff: True
+
+molecule:
+  testinfra_dir: tests
+  ansible_config_template: ansible.cfg
+
+vagrant:
+  providers:
+  - name: virtualbox
+    type: virtualbox
+  platforms:
+  - name: debian
+    box: debian/jessie63
+  instances:
+  - name: ansible-role-apache
+    options:
+        append_platform_to_hostname: yes
+  raw_config_args:
+  - 'vm.synced_folder ".", "/vagrant", disabled: true'

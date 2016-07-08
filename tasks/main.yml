@@ -45,13 +45,6 @@
     dest: /etc/apache2/conf-enabled/shore.conf
     owner: root
     group: root
-    mode: '0644'
+    mode: 0o0644
   notify:
   - Reload Apache
-
-- name: Allow HTTPS in UFW
-  ignore_errors: True
-  ufw:
-    rule: allow
-    port: 443
-    proto: tcp

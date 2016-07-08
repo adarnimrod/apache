@@ -55,8 +55,11 @@ at: https://www.shore.co.il/git/.
 TODO
 ----
 
+- Correct error missing dhparams module without adding submodule but keeping the
+  ca-store role in the test playbook.
 - Remove dependency on the Common role, depend on the ca-store and specific
   roles.
+- Add support for OpenBSD.
 - Server health.
 - Optional OCSP.
 - Log to syslog.

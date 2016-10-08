@@ -2,5 +2,6 @@ def test_example(Command):
     assert Command('uname').rc == 0
 
 
-def test_ansible(Ansible):
-    assert Ansible('debug', 'msg={{ eleven }}')['msg'] == '11'
+def test_root(Command, Sudo):
+    with Sudo():
+        assert Command('whoami').stdout == 'root'

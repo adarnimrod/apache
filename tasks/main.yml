@@ -6,10 +6,16 @@
     that:
     - ansible_os_family == 'Debian'
 
-- name: apt install
-  with_items:
-  - apache2
-  - ssl-cert
+- name: Check if dhparams file exists
+  stat:
+    path: /etc/ssl/dhparams
+  register: stat_dhparams
+
+- name: Get groups
+  getent:
+      database: group
+
+- name: APT install
   apt:
     name: apache2
     state: present
@@ -17,35 +23,77 @@
     cache_valid_time: 3600
 
 - name: Add Apache to ssl-cert group
+  when: "'ssl-cert' in getent_group"
   user:
-    append: yes
-    name: www-data
-    groups: ssl-cert
-    state: present
+      append: yes
+      name: www-data
+      groups: ssl-cert
+      state: present
   notify:
-  - Restart Apache
+      - Restart Apache
+
+- name: Alias emails
+  when: apache_mail_alias is defined
+  lineinfile:
+      dest: /etc/aliases
+      create: yes
+      line: 'www-data: {{ apache_mail_alias }}'
+      regexp: 'www-data:'
 
 - name: Disable default site
   file:
     path: /etc/apache2/sites-enabled/000-default.conf
     state: absent
   notify:
-  - Restart Apache
+      - Restart Apache
 
-- name: Enable modules
-  with_items:
-  - ssl
-  - headers
+- name: List enabled modules
+  shell: "a2query -m | awk '{print $1}'"
+  register: apache_enabled_modules
+  changed_when: False
+
+- name: Enable/ disable modules
+  with_items: '{{ apache_enabled_modules.stdout_lines|union(apache_modules) }}'
   apache2_module:
-    name: '{{ item }}'
-    state: present
-
-- name: Configure
-  template:
-    src: shore.conf.j2
-    dest: /etc/apache2/conf-enabled/shore.conf
-    owner: root
-    group: root
-    mode: 0o0644
+      name: '{{ item }}'
+      state: '{{ "present" if item in apache_modules else "absent" }}'
   notify:
-  - Reload Apache
+      - Restart Apache
+
+- name: Add configuration templates
+  with_fileglob:
+      - templates/apache/conf-enabled/*.conf
+      - '{{ playbook_dir }}/templates/apache/conf-enabled/*.conf'
+  template:
+      src: '{{ item }}'
+      dest: '/etc/apache2/conf-enabled/{{ item|basename }}'
+      owner: root
+      group: 0
+      mode: 0o0644
+  notify:
+      - Restart Apache
+
+- name: Add sites templates
+  with_fileglob:
+      - templates/apache/sites-enabled/*.conf
+      - '{{ playbook_dir }}/templates/apache/sites-enabled/*.conf'
+  template:
+      src: '{{ item }}'
+      dest: '/etc/apache2/sites-enabled/{{ item|basename }}'
+      owner: root
+      group: 0
+      mode: 0o0644
+  notify:
+      - Restart Apache
+
+- name: Enable service
+  service:
+      name: apache2
+      state: started
+      enabled: yes
+
+- meta: flush_handlers
+
+- name: Wait for Apache to recieve requests
+  wait_for:
+      port: 80

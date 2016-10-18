@@ -15,8 +15,6 @@ vagrant:
   platforms:
   - name: debian
     box: debian/jessie64
-  - name: openbsd
-    box: kaorimatz/openbsd-6.0-amd64
   instances:
   - name: ansible-role-apache
     options:

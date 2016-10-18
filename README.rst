@@ -1,7 +1,14 @@
 Apache
 ######
 
-Provision Apache.
+Provision Apache with minimal common configuration (just package installation
+and copy configuration templates, if any). Templates can be placed inside
+:code:`templates/apache/conf-enabled` and :code:`templates/apache/sites-enabled`
+(for configuration and virtualhosts respectibily) either relative to the
+playbook or inside the role. The rational is to have the bare minimum of
+configuration in the role and use user-provided templates to extend the role in
+a way that's best for the user. Therefore configuration such as XSS, OCSP or
+even SSL that is not always relevant is outside the scopre of this role.
 
 Requirements
 ------------
@@ -55,19 +62,9 @@ at: https://www.shore.co.il/git/.
 TODO
 ----
 
-- Correct error missing dhparams module without adding submodule but keeping the
-  ca-store role in the test playbook.
-- Remove dependency on the Common role, depend on the ca-store and specific
-  roles.
-- Add support for OpenBSD.
 - Server health.
-- Optional OCSP.
-- Log to syslog.
 - Limit requests
   (https://httpd.apache.org/docs/current/misc/security_tips.html#dos and
   https://httpd.apache.org/docs/current/server-wide.html#resource).
-- Disable .htaccess
-  (https://httpd.apache.org/docs/current/misc/security_tips.html#systemsettings).
-- Assertions.
 - Wait for server to come online.
 - Tests.

@@ -47,23 +47,17 @@
   notify:
       - Restart Apache
 
-- name: List enabled modules
-  shell: "a2query -m | awk '{print $1}'"
-  register: apache_enabled_modules
-  changed_when: False
-  check_mode: no
-
-- name: Enable/ disable modules
-  with_items: '{{ apache_enabled_modules.stdout_lines|union(apache_modules) }}'
+- name: Enable  modules
+  with_dict: '{{ apache_modules }}'
   apache2_module:
-      name: '{{ item }}'
-      state: '{{ "present" if item in apache_modules else "absent" }}'
+      name: '{{ item.key }}'
+      state: '{{ item.value }}'
   notify:
       - Restart Apache
 
 - name: Add configuration templates
   with_fileglob:
-      - templates/apache/conf-enabled/*.conf
+      - '{{ role_path }}/templates/apache/conf-enabled/*.conf'
       - '{{ playbook_dir }}/templates/apache/conf-enabled/*.conf'
   template:
       src: '{{ item }}'
@@ -76,7 +70,7 @@
 
 - name: Add sites templates
   with_fileglob:
-      - templates/apache/sites-enabled/*.conf
+      - '{{ role_path }}/templates/apache/sites-enabled/*.conf'
       - '{{ playbook_dir }}/templates/apache/sites-enabled/*.conf'
   template:
       src: '{{ item }}'

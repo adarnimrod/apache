@@ -3,24 +3,15 @@
 
 apache_syslog: True
 apache_modules:
-    - ssl
-    - headers
-    - status
-    - access_compat
-    - alias
-    - dir
-    - env
-    - mime
-    - mpm_event
-    - filter
-    - authn_core
-    - autoindex
-    - deflate
-    - authz_host
-    - authz_core
-    - negotiation
-    - auth_basic
-    - authn_file
-    - authz_user
-    - setenvif
-    - socache_shmcb
+    ssl: present
+    ratelimit: present
+    alias: present
+    dir: present
+    rewrite: absent
+    autoindex: present
+    env: present
+    headers: present
+    deflate: present
+    status: present
+    negotiation: present
+    reqtimeout: present

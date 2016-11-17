@@ -71,5 +71,3 @@ TODO
 - Limit requests
   (https://httpd.apache.org/docs/current/misc/security_tips.html#dos and
   https://httpd.apache.org/docs/current/server-wide.html#resource).
-- Wait for server to come online.
-- Tests.

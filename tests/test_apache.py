@@ -10,7 +10,7 @@ def test_apache_utils(Command):
 
 def test_apache_modules(Command, Sudo):
     with Sudo():
-        assert 'socache_shmcb' in Command('a2query -m').stdout
+        assert 'negotiation' in Command('a2query -m').stdout
 
 
 def test_apache_ssl_group(User, Group):

@@ -51,6 +51,7 @@
   shell: "a2query -m | awk '{print $1}'"
   register: apache_enabled_modules
   changed_when: False
+  check_mode: no
 
 - name: Enable/ disable modules
   with_items: '{{ apache_enabled_modules.stdout_lines|union(apache_modules) }}'

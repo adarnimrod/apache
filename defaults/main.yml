@@ -15,3 +15,4 @@ apache_modules:
     status: present
     negotiation: present
     reqtimeout: present
+apache_rate_limit: 512 # In KiB.

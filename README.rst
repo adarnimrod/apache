@@ -67,7 +67,6 @@ at: https://www.shore.co.il/git/.
 TODO
 ----
 
-- Server health.
 - Limit requests
   (https://httpd.apache.org/docs/current/misc/security_tips.html#dos and
   https://httpd.apache.org/docs/current/server-wide.html#resource).

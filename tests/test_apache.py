@@ -21,3 +21,8 @@ def test_apache_ssl_group(User, Group):
 def test_apache_config(Command, Sudo):
     with Sudo():
         assert 'Syntax OK' in Command('apache2ctl configtest').stderr
+
+
+def test_apache_status(Command):
+    assert 'Apache Server Status for' in Command(
+        'wget http://localhost/status -qO -').stdout

@@ -9,5 +9,9 @@ galaxy_info:
   - name: Debian
     versions:
     - jessie
+  - name: Ubuntu
+    versions:
+    - trusty
+    - xenial
   galaxy_tags: [ web ]
 dependencies: []

@@ -1,6 +1,5 @@
 ---
-# defaults file for ansible-role-apache
-
+# defaults file for apache
 apache_syslog: True
 apache_modules:
     ssl: present

@@ -1,5 +1,7 @@
 Apache
 ######
+.. image:: https://travis-ci.org/adarnimrod/apache.svg?branch=master
+    :target: https://travis-ci.org/adarnimrod/apache
 
 Provision Apache with minimal common configuration (just package installation
 and copy configuration templates, if any). Templates can be placed inside
@@ -10,11 +12,11 @@ configuration in the role and use user-provided templates to extend the role in
 a way that's best for the user. Therefore configuration such as XSS, OCSP or
 even SSL that is not always relevant is outside the scopre of this role.
 
+
 Requirements
 ------------
 
-See :code:`meta/main.yml`, :code:`tests/requirements.yml` and assertions at
-the top of :code:`tasks/main.yml`.
+See :code:`meta/main.yml` and assertions at the top of :code:`tasks/main.yml`.
 
 Role Variables
 --------------

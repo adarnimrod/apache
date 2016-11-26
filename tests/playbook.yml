@@ -3,3 +3,9 @@
   roles:
     - role: adarnimrod.ca-store
     - role: apache
+  post_tasks:
+      - name: APT install wget
+        when: ansible_pkg_mgr == 'apt'
+        apt:
+            name: wget
+            state: present

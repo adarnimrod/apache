@@ -17,7 +17,7 @@
 
 - name: APT install
   apt:
-    name: apache2
+    name: [apache2, apache2-utils]
     state: present
     update_cache: yes
     cache_valid_time: 3600

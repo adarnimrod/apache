@@ -1,4 +1,8 @@
 ---
+- hosts: apache-xenial
+  gather_facts: false
+  roles: [adarnimrod.debian-bootstrap]
+
 - hosts: all
   roles:
     - role: adarnimrod.ca-store

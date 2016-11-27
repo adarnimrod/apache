@@ -14,8 +14,12 @@ vagrant:
   - name: virtualbox
     type: virtualbox
   platforms:
-  - name: debian
+  - name: jessie
     box: debian/jessie64
+  - name: xenial
+    box: ubuntu/xenial64
+  - name: trusty
+    box: ubuntu/trusty64
   instances:
   - name: apache
     options:
@@ -31,8 +35,15 @@ docker:
   - name: apache-xenial
     image: ubuntu
     image_version: xenial
+    command: /sbin/init
+    cap_add:
+      - SYS_ADMIN
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
     environment:
         DEBIAN_FRONTEND: noninteractive
+        container: docker
   - name: apache-trusty
     image: ubuntu
     image_version: trusty
@@ -41,5 +52,12 @@ docker:
   - name: apache-jessie
     image: debian
     image_version: jessie
+    command: /sbin/init
+    cap_add:
+      - SYS_ADMIN
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
     environment:
         DEBIAN_FRONTEND: noninteractive
+        container: docker

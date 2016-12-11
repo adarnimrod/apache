@@ -4,6 +4,7 @@
   roles: [adarnimrod.debian-bootstrap]
 
 - hosts: all
+  strategy: free
   roles:
     - role: adarnimrod.ca-store
     - role: apache

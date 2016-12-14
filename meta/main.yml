@@ -14,4 +14,6 @@ galaxy_info:
     - trusty
     - xenial
   galaxy_tags: [ web ]
-dependencies: []
+dependencies:
+- src: adarnimrod.ca-store
+  name: adarnimrod.ca-store

@@ -30,4 +30,4 @@ def test_apache_config(Command, Sudo):
 
 def test_apache_status(Command):
     assert 'Apache Server Status for' in Command(
-        'wget http://localhost/status -qO -').stdout
+        'curl http://localhost/status').stdout

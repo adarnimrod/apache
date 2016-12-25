@@ -11,10 +11,6 @@
     path: /etc/ssl/dhparams
   register: stat_dhparams
 
-- name: Get groups
-  getent:
-      database: group
-
 - name: APT install
   apt:
     name: [apache2, apache2-utils]
@@ -55,7 +51,6 @@
       owner: root
       group: 0
       mode: 0o0644
-      validate: apache2ctl configtest
   notify:
       - Restart Apache
 
@@ -69,9 +64,12 @@
       owner: root
       group: 0
       mode: 0o0644
-      validate: apache2ctl configtest
   notify:
       - Restart Apache
+
+- name: Validate config
+  command: apache2ctl configtest
+  changed_when: False
 
 - name: Enable service
   service:

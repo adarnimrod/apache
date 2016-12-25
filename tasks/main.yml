@@ -22,16 +22,6 @@
     update_cache: yes
     cache_valid_time: 3600
 
-- name: Add Apache to ssl-cert group
-  when: "'ssl-cert' in getent_group"
-  user:
-      append: yes
-      name: www-data
-      groups: ssl-cert
-      state: present
-  notify:
-      - Restart Apache
-
 - name: Alias emails
   when: apache_mail_alias is defined
   lineinfile:

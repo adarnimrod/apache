@@ -18,11 +18,6 @@ def test_apache_modules(Command, Sudo):
         assert 'negotiation' in Command('a2query -m').stdout
 
 
-def test_apache_ssl_group(User, Group):
-    if Group('ssl-cert').exists:
-        assert 'ssl-cert' in User('www-data').groups
-
-
 def test_apache_config(Command, Sudo):
     with Sudo():
         assert 'Syntax OK' in Command('apache2ctl configtest').stderr

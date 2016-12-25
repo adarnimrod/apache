@@ -55,6 +55,7 @@
       owner: root
       group: 0
       mode: 0o0644
+      validate: apache2ctl configtest
   notify:
       - Restart Apache
 
@@ -68,6 +69,7 @@
       owner: root
       group: 0
       mode: 0o0644
+      validate: apache2ctl configtest
   notify:
       - Restart Apache
 

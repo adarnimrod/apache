@@ -1,7 +1,7 @@
 ---
 - hosts: apache-xenial
   gather_facts: false
-  roles: [adarnimrod.debian-bootstrap]
+  roles: [debian-bootstrap]
 
 - hosts: all
   strategy: free

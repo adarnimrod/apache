@@ -1,10 +1,23 @@
 ---
-- hosts: apache-xenial
+- hosts: apache-openbsd*
   gather_facts: false
-  roles: [debian-bootstrap]
+  roles:
+      - openbsd-bootstrap
+      - role: users
+        users: []
+        users_use_sudo: True
+        users_lock_root_ssh: False
+
+- hosts: [apache-xenial, apache-wheezy]
+  gather_facts: false
+  roles:
+      - debian-bootstrap
+      - role: users
+        users: []
+        users_use_sudo: True
+        users_lock_root_ssh: False
 
 - hosts: all
-  strategy: free
   roles:
     - role: adarnimrod.ca-store
     - role: apache

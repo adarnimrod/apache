@@ -17,4 +17,4 @@ galaxy_info:
   galaxy_tags: [ web ]
 dependencies:
 - src: adarnimrod.ca-store
-  name: adarnimrod.ca-store
+  name: ca-store
